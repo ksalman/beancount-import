@@ -1,0 +1,11 @@
+Description,,Summary Amt.
+Beginning balance as of 11/01/2017,,"10000.18"
+Total credits,,"200.18"
+Total debits,,"-20.18"
+Ending balance as of 11/30/2017,,"10180.88"
+
+Date,Description,Amount,Running Bal.
+11/01/2017,Beginning balance as of 11/01/2017,,"10000.18"
+11/01/2017,"Merchant1","-10.00","9990.18"
+11/06/2017,"Merchant2","-10.00","9980.18"
+11/06/2017,"paycheck","200.00","10180.18"
