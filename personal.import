@@ -19,6 +19,7 @@ from beancount.ingest.importers import ofx
 CONFIG = [
   bank1.Importer("USD",
                 "Assets:US:Bank:Checking",
+                "Expenses:Groceries",
      ),
 #    utrade.Importer("USD",
 #                    "Assets:US:UTrade",

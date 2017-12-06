@@ -25,9 +25,11 @@ from beancount.ingest import regression
 class Importer(importer.ImporterProtocol):
 
   def __init__(self, currency,
-               account_root,):
+               account_root,
+               account2):
     self.currency = currency
     self.account_root = account_root
+    self.account2 = account2
 
   def identify(self, file):
     return (re.match(r"stmt.csv", path.basename(file.name)) and
@@ -50,26 +52,14 @@ class Importer(importer.ImporterProtocol):
         trans_date = parse(row['Date']).date()
         trans_desc = titlecase(row['Description'])
         trans_amt = row['Amount']
+        units = amount.Amount(D(row['Amount']), self.currency)
 
         txn = data.Transaction(
-          meta=meta,
-          date=trans_date,
-          payee=trans_desc,
-          narration="",
-          flag=flags.FLAG_OKAY,
-          tags=set(),
-          links=set(),
-          postings=[],
-        )
-
-        txn.postings.append(
-          data.Posting(self.account_root, amount.Amount(D(trans_amt),'USD'),
-                       None, None, None,None),
-        )
+            meta, trans_date, self.FLAG, trans_desc, None, data.EMPTY_SET, data.EMPTY_SET, [
+                data.Posting(self.account_root, units, None, None, None, None),
+                data.Posting(self.account2, -units, None, None, None, None),
+            ])
 
         entries.append(txn)
 
     return entries
-
-
-# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
